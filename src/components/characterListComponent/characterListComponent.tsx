@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import Card from '../cardComponent/cardComponent';
 
 interface Character {
     id: number;
@@ -11,13 +10,19 @@ interface Character {
 
 interface CharacterListProps {
     characters: Character[];
+    onCheckboxChange: (characterId: number) => void;
 }
 
-const CharacterListComponent: React.FC<CharacterListProps> = ({ characters }) => {
+const CharacterListComponent: React.FC<CharacterListProps> = ({ characters, onCheckboxChange }) => {
+    const handleCheck = (characterId: number) => {
+        onCheckboxChange(characterId);
+    };
+
     return (
-        <Card>
+        <>
             {characters.map((character) => (
                 <div key={character.id} style={{ display: 'flex', flexDirection: 'row' }}>
+                    <input type="checkbox" onChange={() => handleCheck(character.id)} />
                     <div style={{ padding: '10px' }}>
                         <Image src={character.image} alt={character.name} width={40} height={20} />
                     </div>
@@ -27,7 +32,7 @@ const CharacterListComponent: React.FC<CharacterListProps> = ({ characters }) =>
                     </div>
                 </div>
             ))}
-        </Card>
+        </>
     );
 };
 
