@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import SearchComponent from '@/components/searchComponent/searchComponent';
 
 export default function Home() {

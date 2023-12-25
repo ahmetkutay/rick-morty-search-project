@@ -28,7 +28,6 @@ export async function searchCharacters(
     }
     return Array.from(responseCharacter);
   } catch (error) {
-    console.error("Error fetching characters:", error);
     return [];
   }
 }

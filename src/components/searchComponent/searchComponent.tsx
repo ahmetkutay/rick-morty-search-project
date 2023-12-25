@@ -14,13 +14,15 @@ interface Character {
 }
 
 const SearchComponent: React.FC = () => {
-    const [searchedCharacters, setSearcedCharacters] = useState<Character[]>([]);
-    const [searchValue, setSearchValue] = useState('');
+    const [searchedCharacters, setSearchedCharacters] = useState<Character[]>([]);
+    const [searchValue, setSearchValue] = useState<any>('');
+    const [selectedCharacters, setSelectedCharacters] = useState<Character[]>([]);
+    const [securedCharacters, setSecuredCharacters] = useState<Character[]>([]); // New state
 
     useEffect(() => {
         const rickAndMortyCharacters = async () => {
             let response = await searchCharacters(searchValue)
-            setSearcedCharacters(response.map((character) => ({
+            setSearchedCharacters(response.map((character) => ({
                 id: character.id,
                 name: character.name,
                 episode: character.episode,
@@ -29,29 +31,36 @@ const SearchComponent: React.FC = () => {
             })));
         }
         rickAndMortyCharacters()
-    }, [searchValue])
+    }, [searchValue]);
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(event.target.value);
+        const poppedSearchedValue = event.target.value.split(' ').pop();
+        setSearchValue(poppedSearchedValue);
     };
 
     const handleCheckboxChange = (characterId: number) => {
-        setSearcedCharacters((prevCharacters) =>
-            prevCharacters.map((character) =>
-                character.id === characterId
-                    ? { ...character, checked: !character.checked }
-                    : character
-            )
-        );
+        setSearchedCharacters((prevCharacters) => {
+            const updatedCharacters = prevCharacters.map((character) =>
+                character.id === characterId ? { ...character, checked: !character.checked } : character
+            );
+            setSelectedCharacters(updatedCharacters.filter(character => character.checked));
+            setSecuredCharacters(updatedCharacters.filter(character => character.checked)); // Update the securedCharacters state
+            return updatedCharacters;
+        });
     };
+
+    useEffect(() => {
+        const selectedCharacters = searchedCharacters.filter((character) => character.checked);
+        setSelectedCharacters(selectedCharacters);
+    }, [searchedCharacters]);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <input
                 type="text"
-                value={searchValue}
+                value={securedCharacters.map(character => character.name).join(", ") + " " + searchValue}
                 onChange={handleSearchChange}
-                placeholder={`Search ${searchedCharacters.length > 0 ? searchedCharacters[0].name : ''}...`}
+                placeholder={`Search`}
                 style={{
                     padding: '8px',
                     border: '1px solid #000000',

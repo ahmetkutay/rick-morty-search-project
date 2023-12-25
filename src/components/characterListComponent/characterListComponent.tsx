@@ -24,9 +24,9 @@ const CharacterListComponent: React.FC<CharacterListProps> = ({ characters, onCh
                 <div key={character.id} style={{ display: 'flex', flexDirection: 'row' }}>
                     <input type="checkbox" onChange={() => handleCheck(character.id)} />
                     <div style={{ padding: '10px' }}>
-                        <Image src={character.image} alt={character.name} width={40} height={20} />
+                        <Image src={character.image} alt={character.name} width={40} height={20} style={{ width: 'auto', height: 'auto' }} />
                     </div>
-                    <div style={{ flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignSelf: 'center' }}>
                         <h3>{character.name}</h3>
                         <p>Episodes: {character.episode}</p>
                     </div>
