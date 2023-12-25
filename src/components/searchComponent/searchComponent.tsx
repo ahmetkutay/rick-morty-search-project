@@ -17,7 +17,6 @@ const SearchComponent: React.FC = () => {
     const [searchedCharacters, setSearchedCharacters] = useState<Character[]>([]);
     const [searchValue, setSearchValue] = useState<any>('');
     const [selectedCharacters, setSelectedCharacters] = useState<Character[]>([]);
-    const [securedCharacters, setSecuredCharacters] = useState<Character[]>([]); // New state
 
     useEffect(() => {
         const rickAndMortyCharacters = async () => {
@@ -39,14 +38,13 @@ const SearchComponent: React.FC = () => {
     };
 
     const handleCheckboxChange = (characterId: number) => {
-        setSearchedCharacters((prevCharacters) => {
-            const updatedCharacters = prevCharacters.map((character) =>
-                character.id === characterId ? { ...character, checked: !character.checked } : character
-            );
-            setSelectedCharacters(updatedCharacters.filter(character => character.checked));
-            setSecuredCharacters(updatedCharacters.filter(character => character.checked)); // Update the securedCharacters state
-            return updatedCharacters;
-        });
+        setSearchedCharacters((prevCharacters) =>
+            prevCharacters.map((character) =>
+                character.id === characterId
+                    ? { ...character, checked: !character.checked }
+                    : character
+            )
+        );
     };
 
     useEffect(() => {
@@ -58,7 +56,7 @@ const SearchComponent: React.FC = () => {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <input
                 type="text"
-                value={securedCharacters.map(character => character.name).join(", ") + " " + searchValue}
+                value={selectedCharacters.map(character => character.name).join(", ") + " " + searchValue}
                 onChange={handleSearchChange}
                 placeholder={`Search`}
                 style={{
@@ -74,6 +72,7 @@ const SearchComponent: React.FC = () => {
                 <CharacterListComponent
                     characters={searchedCharacters}
                     onCheckboxChange={handleCheckboxChange}
+                    searchValue={searchValue}
                 />
             </CardComponent>
         </div>

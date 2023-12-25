@@ -11,9 +11,10 @@ interface Character {
 interface CharacterListProps {
     characters: Character[];
     onCheckboxChange: (characterId: number) => void;
+    searchValue: string;
 }
 
-const CharacterListComponent: React.FC<CharacterListProps> = ({ characters, onCheckboxChange }) => {
+const CharacterListComponent: React.FC<CharacterListProps> = ({ characters, onCheckboxChange, searchValue }) => {
     const handleCheck = (characterId: number) => {
         onCheckboxChange(characterId);
     };
@@ -27,7 +28,17 @@ const CharacterListComponent: React.FC<CharacterListProps> = ({ characters, onCh
                         <Image src={character.image} alt={character.name} width={40} height={20} style={{ width: 'auto', height: 'auto' }} />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', alignSelf: 'center' }}>
-                        <h3>{character.name}</h3>
+                        <h3>
+                            {character.name.split(new RegExp(`(${searchValue})`, 'gi')).map((part, index) => (
+                                <React.Fragment key={index}>
+                                    {part.toLowerCase() === searchValue.toLowerCase() ? (
+                                        <b>{part}</b>
+                                    ) : (
+                                        part
+                                    )}
+                                </React.Fragment>
+                            ))}
+                        </h3>
                         <p>Episodes: {character.episode}</p>
                     </div>
                 </div>
