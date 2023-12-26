@@ -29,7 +29,7 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ selectedCharacters, 
     return (
         <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
             <div style={{ display: 'flex', flexWrap: 'wrap', marginRight: '8px' }}>
-                {selectedCharacterList?.map((character) => (
+                {/*selectedCharacterList?.map((character) => (
                     <div
                         key={character.id}
                         onClick={() => onCheckboxChange(character.id)}
@@ -46,7 +46,7 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ selectedCharacters, 
                     >
                         {character.name}
                     </div>
-                ))}
+                    ))*/}
             </div>
             <input
                 type="text"

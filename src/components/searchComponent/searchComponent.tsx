@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { searchCharacters } from '../../api/rickAndMortyApi';
 import CharacterListComponent from '../characterListComponent/characterListComponent';
-import CardComponent from '../cardComponent/cardComponent';
 import SearchInputComponent from '../searchInputComponent/searchInputComponent';
 
 interface Character {
@@ -51,13 +50,11 @@ const SearchComponent: React.FC = () => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <SearchInputComponent handleSearchChange={handleSearchChange} onCheckboxChange={handleCheckboxChange} selectedCharacters={selectedCharacterIds} searchValue={searchValue} />
-            <CardComponent>
                 <CharacterListComponent
                     characters={searchedCharacters}
                     onCheckboxChange={handleCheckboxChange}
                     searchValue={searchValue}
-                />
-            </CardComponent>
+            />
         </div>
     );
 };
