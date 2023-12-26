@@ -6,6 +6,7 @@ interface Character {
     name: string;
     image: string;
     episode: number;
+    checked: boolean;
 }
 
 interface CharacterListProps {
@@ -18,12 +19,11 @@ const CharacterListComponent: React.FC<CharacterListProps> = ({ characters, onCh
     const handleCheck = (characterId: number) => {
         onCheckboxChange(characterId);
     };
-
     return (
         <>
             {characters.map((character) => (
                 <div key={character.id} style={{ display: 'flex', flexDirection: 'row' }}>
-                    <input type="checkbox" onChange={() => handleCheck(character.id)} />
+                    <input type="checkbox" onChange={() => handleCheck(character.id)} checked={character.checked} />
                     <div style={{ padding: '10px' }}>
                         <Image src={character.image} alt={character.name} width={40} height={20} style={{ width: 'auto', height: 'auto' }} />
                     </div>

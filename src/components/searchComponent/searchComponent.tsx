@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { searchCharacters } from '../../api/rickAndMortyApi';
 import CharacterListComponent from '../characterListComponent/characterListComponent';
 import CardComponent from '../cardComponent/cardComponent';
+import SearchInputComponent from '../searchInputComponent/searchInputComponent';
 
 interface Character {
     id: number;
@@ -16,21 +17,21 @@ interface Character {
 const SearchComponent: React.FC = () => {
     const [searchedCharacters, setSearchedCharacters] = useState<Character[]>([]);
     const [searchValue, setSearchValue] = useState<any>('');
-    const [selectedCharacters, setSelectedCharacters] = useState<Character[]>([]);
+    const [selectedCharacterIds, setSelectedCharacterIds] = useState<number[]>([]);
 
     useEffect(() => {
         const rickAndMortyCharacters = async () => {
-            let response = await searchCharacters(searchValue)
+            let response = await searchCharacters(searchValue);
             setSearchedCharacters(response.map((character) => ({
                 id: character.id,
                 name: character.name,
                 episode: character.episode,
                 image: character.image,
-                checked: false,
+                checked: selectedCharacterIds.includes(character.id),
             })));
-        }
-        rickAndMortyCharacters()
-    }, [searchValue]);
+        };
+        rickAndMortyCharacters();
+    }, [searchValue, selectedCharacterIds]);
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const poppedSearchedValue = event.target.value.split(' ').pop();
@@ -38,36 +39,18 @@ const SearchComponent: React.FC = () => {
     };
 
     const handleCheckboxChange = (characterId: number) => {
-        setSearchedCharacters((prevCharacters) =>
-            prevCharacters.map((character) =>
-                character.id === characterId
-                    ? { ...character, checked: !character.checked }
-                    : character
-            )
-        );
+        setSelectedCharacterIds((prevIds) => {
+            if (prevIds.includes(characterId)) {
+                return prevIds.filter((id) => id !== characterId);
+            } else {
+                return [...prevIds, characterId];
+            }
+        });
     };
-
-    useEffect(() => {
-        const selectedCharacters = searchedCharacters.filter((character) => character.checked);
-        setSelectedCharacters(selectedCharacters);
-    }, [searchedCharacters]);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <input
-                type="text"
-                value={selectedCharacters.map(character => character.name).join(", ") + " " + searchValue}
-                onChange={handleSearchChange}
-                placeholder={`Search`}
-                style={{
-                    padding: '8px',
-                    border: '1px solid #000000',
-                    borderRadius: '4px',
-                    marginBottom: '16px',
-                    fontSize: '16px',
-                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-                }}
-            />
+            <SearchInputComponent handleSearchChange={handleSearchChange} onCheckboxChange={handleCheckboxChange} selectedCharacters={selectedCharacterIds} searchValue={searchValue} />
             <CardComponent>
                 <CharacterListComponent
                     characters={searchedCharacters}
