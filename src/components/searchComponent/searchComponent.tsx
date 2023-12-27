@@ -18,9 +18,11 @@ const SearchComponent: React.FC = () => {
     const [searchedCharacters, setSearchedCharacters] = useState<Character[]>([]);
     const [searchValue, setSearchValue] = useState<any>('');
     const [selectedCharacterIds, setSelectedCharacterIds] = useState<number[]>([]);
+    const [loadingState, setLoadingState] = useState<boolean>(true);
 
     useEffect(() => {
         const rickAndMortyCharacters = async () => {
+            setLoadingState(true);
             let response = await searchCharacters(searchValue);
             setSearchedCharacters(response.map((character) => ({
                 id: character.id,
@@ -29,6 +31,7 @@ const SearchComponent: React.FC = () => {
                 image: character.image,
                 checked: selectedCharacterIds.includes(character.id),
             })));
+            setLoadingState(false);
         };
         rickAndMortyCharacters();
     }, [searchValue, selectedCharacterIds]);
@@ -53,6 +56,7 @@ const SearchComponent: React.FC = () => {
         <div className='search-wrapper'>
             <SearchInputComponent handleSearchChange={handleSearchChange} onCheckboxChange={handleCheckboxChange} selectedCharacters={selectedCharacterIds} searchValue={searchValue} />
             <CharacterListComponent
+                loadingState={loadingState}
                 characters={searchedCharacters}
                 onCheckboxChange={handleCheckboxChange}
                 searchValue={searchValue}

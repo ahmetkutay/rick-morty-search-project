@@ -2,12 +2,12 @@ import React from 'react';
 import ContentLoader from 'react-content-loader';
 
 interface SearchCharacterSkeletonProps {
-    length: number;
-    speed: number;
-    height: number;
-    viewBox: string;
-    backgroundColor: string;
-    foregroundColor: string;
+    length?: number;
+    speed?: number;
+    height?: number;
+    viewBox?: string;
+    backgroundColor?: string;
+    foregroundColor?: string;
 }
 
 interface RectProps {

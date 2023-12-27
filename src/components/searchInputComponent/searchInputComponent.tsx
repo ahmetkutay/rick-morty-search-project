@@ -34,10 +34,12 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ selectedCharacters, 
                 {selectedCharacterList?.map((character) => (
                     <div
                         key={character.id}
-                        onClick={() => onCheckboxChange(character.id)}
                         className='selected-character'
                     >
                         {character.name}
+                        <div onClick={() => onCheckboxChange(character.id)} className='close-icon'>
+                            X
+                        </div>
                     </div>
                 ))}
             </div>
