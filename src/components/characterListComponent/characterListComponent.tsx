@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import './characterListComponent.css'
 
@@ -20,35 +20,61 @@ const CharacterListComponent: React.FC<CharacterListProps> = ({ characters, onCh
     const [activeIndex, setActiveIndex] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement | null>(null);
 
-    const handleCheck = (characterId: number) => {
+    const handleCheck = useCallback((characterId: number) => {
         onCheckboxChange(characterId);
-    };
-
-    const handleKeyDown = (event: React.KeyboardEvent) => {
-        switch (event.key) {
-            case 'ArrowUp':
-                setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
-                break;
-            case 'ArrowDown':
-                setActiveIndex((prevIndex) => (prevIndex < characters.length - 1 ? prevIndex + 1 : prevIndex));
-                break;
-            case 'Enter':
-                handleCheck(characters[activeIndex].id);
-                break;
-        }
-
-        if (containerRef.current) {
-            const itemHeight = 60;
-            containerRef.current.scrollTop = activeIndex * itemHeight;
-        }
-    };
+    }, [onCheckboxChange]);
 
     useEffect(() => {
+        const handleKeyDown = (event: React.KeyboardEvent) => {
+            switch (event.key) {
+                case 'ArrowUp':
+                    setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
+                    break;
+                case 'ArrowDown':
+                    setActiveIndex((prevIndex) => (prevIndex < characters.length - 1 ? prevIndex + 1 : prevIndex));
+                    break;
+                case 'Enter':
+                    handleCheck(characters[activeIndex].id);
+                    break;
+            }
+
+            if (containerRef.current) {
+                const itemHeight = 60;
+                containerRef.current.scrollTop = activeIndex * itemHeight;
+            }
+        };
+
         window.addEventListener('keydown', handleKeyDown as any);
         return () => {
             window.removeEventListener('keydown', handleKeyDown as any);
         };
-    }, [activeIndex, characters]);
+    }, [activeIndex, characters, handleCheck]);
+
+    useEffect(() => {
+        const handleKeyDown = (event: React.KeyboardEvent) => {
+            switch (event.key) {
+                case 'ArrowUp':
+                    setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
+                    break;
+                case 'ArrowDown':
+                    setActiveIndex((prevIndex) => (prevIndex < characters.length - 1 ? prevIndex + 1 : prevIndex));
+                    break;
+                case 'Enter':
+                    handleCheck(characters[activeIndex].id);
+                    break;
+            }
+
+            if (containerRef.current) {
+                const itemHeight = 60;
+                containerRef.current.scrollTop = activeIndex * itemHeight;
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown as any);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown as any);
+        };
+    }, [activeIndex, characters, handleCheck]);
 
     return (
         <div ref={containerRef} className="card" id='scrollStyle'>

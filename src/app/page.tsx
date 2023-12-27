@@ -1,8 +1,9 @@
 import SearchComponent from '@/components/searchComponent/searchComponent';
+import './page.css'
 
 export default function Home() {
   return (
-    <main style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+    <main className='home-wrapper'>
       <div>
         <SearchComponent />
       </div>

@@ -49,7 +49,7 @@ export async function selectedCharactersApi(
   let responseCharacter = new Set<SelectedCharacter>();
   try {
     const response =
-      selectedCharacterArray?.length > 0 &&
+      (selectedCharacterArray?.length ?? 0) > 0 &&
       (await axios.get(
         `https://rickandmortyapi.com/api/character/${selectedCharacterArray?.join(
           ","
