@@ -27,9 +27,24 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ selectedCharacters, 
     const selectedCharactersString = selectedCharacterList?.map(character => character.name).join(', ');
 
     return (
-        <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', marginRight: '8px' }}>
-                {/*selectedCharacterList?.map((character) => (
+        <div
+            onInput={handleSearchChange}
+            style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                padding: '8px',
+                border: '1px solid #000000',
+                borderRadius: '4px',
+                fontSize: '16px',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                backgroundColor: '#ffffff',
+                color: '#000000',
+                cursor: 'text',
+            }}
+        >
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {selectedCharacterList?.map((character) => (
                     <div
                         key={character.id}
                         onClick={() => onCheckboxChange(character.id)}
@@ -46,20 +61,20 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ selectedCharacters, 
                     >
                         {character.name}
                     </div>
-                    ))*/}
+                ))}
             </div>
             <input
                 type="text"
-                value={`${selectedCharactersString || ''} ${searchValue}`}
+                value={searchValue}
                 onChange={handleSearchChange}
-                placeholder={`Search`}
+                placeholder="Search"
                 style={{
                     flex: 1,
+                    marginLeft: '8px',
                     padding: '8px',
-                    border: '1px solid #000000',
-                    borderRadius: '4px',
+                    border: 'none',
                     fontSize: '16px',
-                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                    outline: 'none',
                 }}
             />
         </div>
