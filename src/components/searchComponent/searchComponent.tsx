@@ -33,6 +33,7 @@ const SearchComponent: React.FC = () => {
     }, [searchValue, selectedCharacterIds]);
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
         const poppedSearchedValue = event.target.value.split(' ').pop();
         setSearchValue(poppedSearchedValue);
     };
@@ -50,10 +51,10 @@ const SearchComponent: React.FC = () => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <SearchInputComponent handleSearchChange={handleSearchChange} onCheckboxChange={handleCheckboxChange} selectedCharacters={selectedCharacterIds} searchValue={searchValue} />
-                <CharacterListComponent
-                    characters={searchedCharacters}
-                    onCheckboxChange={handleCheckboxChange}
-                    searchValue={searchValue}
+            <CharacterListComponent
+                characters={searchedCharacters}
+                onCheckboxChange={handleCheckboxChange}
+                searchValue={searchValue}
             />
         </div>
     );

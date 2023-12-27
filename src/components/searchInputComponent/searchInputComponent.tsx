@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { selectedCharactersApi } from '@/api/rickAndMortyApi';
+import './searchInputComponent.css'
 
 interface Character {
     id: number;
@@ -24,40 +25,17 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ selectedCharacters, 
         selectedRickAndMortyCharacters();
     }, [selectedCharacters]);
 
-    const selectedCharactersString = selectedCharacterList?.map(character => character.name).join(', ');
-
     return (
         <div
             onInput={handleSearchChange}
-            style={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                padding: '8px',
-                border: '1px solid #000000',
-                borderRadius: '4px',
-                fontSize: '16px',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                backgroundColor: '#ffffff',
-                color: '#000000',
-                cursor: 'text',
-            }}
+            className='input-wrapper'
         >
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {selectedCharacterList?.map((character) => (
                     <div
                         key={character.id}
                         onClick={() => onCheckboxChange(character.id)}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            padding: '4px',
-                            margin: '4px',
-                            backgroundColor: '#e0e0e0',
-                            borderRadius: '4px',
-                            border: '1px solid #000000',
-                            fontSize: '14px',
-                        }}
+                        className='selected-character'
                     >
                         {character.name}
                     </div>
@@ -68,14 +46,7 @@ const SearchInputComponent: React.FC<SearchInputProps> = ({ selectedCharacters, 
                 value={searchValue}
                 onChange={handleSearchChange}
                 placeholder="Search"
-                style={{
-                    flex: 1,
-                    marginLeft: '8px',
-                    padding: '8px',
-                    border: 'none',
-                    fontSize: '16px',
-                    outline: 'none',
-                }}
+                className='search-input'
             />
         </div>
     );
