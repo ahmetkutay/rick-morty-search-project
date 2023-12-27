@@ -33,7 +33,7 @@ const SearchCharacterSkeleton: React.FC<SearchCharacterSkeletonProps> = React.me
 }) => (
     <div>
         {Array.from({ length }).map((_, index) => (
-            <div key={index} style={{ padding: '10px' }}>
+            <div key={index} style={{ paddingBottom: '10px' }}>
                 <ContentLoader
                     speed={speed}
                     height={height}

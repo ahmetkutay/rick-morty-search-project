@@ -4,9 +4,7 @@ import './page.css'
 export default function Home() {
   return (
     <main className='home-wrapper'>
-      <div>
-        <SearchComponent />
-      </div>
+      <SearchComponent />
     </main>
   )
 }

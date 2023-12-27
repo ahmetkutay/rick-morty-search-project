@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { searchCharacters } from '../../api/rickAndMortyApi';
 import CharacterListComponent from '../characterListComponent/characterListComponent';
 import SearchInputComponent from '../searchInputComponent/searchInputComponent';
+import './searchCompoment.css'
 
 interface Character {
     id: number;
@@ -49,7 +50,7 @@ const SearchComponent: React.FC = () => {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className='search-wrapper'>
             <SearchInputComponent handleSearchChange={handleSearchChange} onCheckboxChange={handleCheckboxChange} selectedCharacters={selectedCharacterIds} searchValue={searchValue} />
             <CharacterListComponent
                 characters={searchedCharacters}
