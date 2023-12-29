@@ -66,7 +66,7 @@ const CharacterListComponent: React.FC<CharacterListProps> = ({ characters, onCh
                             <div style={{ padding: '10px' }}>
                                 <Image src={character.image} alt={character.name} width={40} height={20} style={{ width: 'auto', height: 'auto' }} />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignSelf: 'center' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignSelf: 'center', color: 'black' }}>
                                 <h3>
                                     {character.name.split(new RegExp(`(${searchValue})`, 'gi')).map((part, index) => (
                                         <React.Fragment key={index}>
